@@ -36,3 +36,59 @@
     transform: rotate(360deg);
   }
 }
+@font-face {
+  font-family: 'Brittany';
+  src: url('./assets/fonts/BrittanySignature.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.logo{
+  margin-Left: 90px;
+  color: #ff7e6e !important ;
+  font-size: 50px  !important ;
+  font-family: 'Brittany', sans-serif;
+  margin-top: 30px;
+
+
+}
+table, th, td {
+  border: 1px solid;
+}
+.addButton{
+    margin-top: 20px;
+    right:10px;
+    top: 50%;
+    transform:translateY(-50%);
+    border-radius: 10px;
+    background-color: #f8d7da;
+    border-color: #f8d7da;
+    height:30px ;
+    width: 35px;
+    color: #282c34;
+    text-align:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 5px 10px;
+    display:inline-block
+
+  
+}
+.student-table {
+  width: 80%;
+  border-collapse: collapse;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  margin: 20px 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: 100px;
+}
+/* StudentManager.css */
+
+.centered-container {
+  flex-direction: column;
+}
+.addNote{
+  
+}
