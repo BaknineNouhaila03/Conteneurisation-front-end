@@ -10,7 +10,8 @@ const DetailEtudiant = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [newNote, setNewNote] = useState("");
+    const [matiere, setMatiere] = useState(""); // State for matière
+    const [note, setNote] = useState(""); // State for note
 
     useEffect(() => {
         axios
@@ -26,22 +27,24 @@ const DetailEtudiant = () => {
     }, [id]);
 
     const handleAddNote = () => {
-        if (!newNote.trim()) {
-            message.error("Please enter a valid note!");
+        if (!matiere.trim() || !note.trim()) {
+            message.error("Please enter both matière and note!");
             return;
         }
 
         // Assume you have an API endpoint to add a note
         axios
-            .post(`http://localhost:8080/api/etudiants/${id}/notes`, { note: newNote })
+            .post(`http://localhost:8080/api/etudiants/${id}/notes`, { matiere, note })
             .then((response) => {
+                // Update the student data with the new note
                 setStudent((prevStudent) => ({
                     ...prevStudent,
-                    notes: [...prevStudent.notes, newNote],
+                    notes: [...prevStudent.notes, { matiere, note }],
                 }));
                 message.success("Note added successfully!");
                 setIsModalVisible(false);
-                setNewNote("");
+                setMatiere(""); // Reset the matière input
+                setNote(""); // Reset the note input
             })
             .catch((error) => {
                 message.error("Failed to add note. Please try again.");
@@ -51,7 +54,8 @@ const DetailEtudiant = () => {
 
     const handleModalCancel = () => {
         setIsModalVisible(false);
-        setNewNote("");
+        setMatiere(""); // Reset on cancel
+        setNote(""); // Reset on cancel
     };
 
     if (loading) {
@@ -96,10 +100,10 @@ const DetailEtudiant = () => {
                                     }}
                                 >
                                     <td style={{ padding: "12px 15px", borderBottom: "1px solid #ddd" }}>
-                                        {note.matiere} {/* Assuming each note has a matière property */}
+                                        {note.matiere}
                                     </td>
                                     <td style={{ padding: "12px 15px", borderBottom: "1px solid #ddd" }}>
-                                        {note.note} {/* Assuming each note has a note property */}
+                                        {note.note}
                                     </td>
                                 </tr>
                             ))
@@ -127,9 +131,15 @@ const DetailEtudiant = () => {
                 cancelText="Cancel"
             >
                 <Input
-                    placeholder="Enter a new note"
-                    value={newNote}
-                    onChange={(e) => setNewNote(e.target.value)}
+                    placeholder="Enter matière"
+                    value={matiere}
+                    onChange={(e) => setMatiere(e.target.value)}
+                />
+                <Input
+                    placeholder="Enter note"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    style={{ marginTop: "10px" }} // Adding space between inputs
                 />
             </Modal>
         </div>
