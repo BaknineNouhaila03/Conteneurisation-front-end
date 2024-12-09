@@ -45,7 +45,7 @@
 .logo{
   margin-Left: 90px;
   color: #ff7e6e !important ;
-  font-size: 50px  !important ;
+  font-size: 40px  !important ;
   font-family: 'Brittany', sans-serif;
   margin-top: 30px;
 
@@ -84,11 +84,82 @@ table, th, td {
   overflow: hidden;
   margin-left: 100px;
 }
+.student-table th, .student-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd; /* Light grey border */
+}
+
+.student-table th {
+    background-color: #555; /* Dark grey for header */
+    color: white;
+    border: 1px solid #555; /* Light grey border */
+
+}
 /* StudentManager.css */
 
 .centered-container {
   flex-direction: column;
 }
-.addNote{
-  
+/* EtudiantDetail.css */
+.etudiant-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f7f8fa;
+  height: 100vh;
+}
+
+.etudiant-card {
+  max-width: 500px;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.cover-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.etudiant-card .ant-card-body {
+  padding: 20px;
+}
+
+.etudiant-card .ant-btn {
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.etudiant-card .ant-descriptions-bordered .ant-descriptions-item-label {
+  background-color: #f0f2f5;
+}
+
+.student-table-container {
+  position: relative;
+}
+
+.table-footer {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.addNote {
+  padding: 10px 20px;
+  background-color: #667267;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.addNote:hover {
+  background-color: #667267;
 }

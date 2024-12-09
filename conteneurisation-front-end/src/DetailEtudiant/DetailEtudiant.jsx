@@ -14,6 +14,9 @@ const DetailEtudiant = () => {
     const [note, setNote] = useState(""); // State for note
 
     useEffect(() => {
+        fetchNotes()}, [id]);
+
+    const fetchNotes =()=> {
         axios
             .get(`http://localhost:8080/api/etudiants/${id}`)
             .then((response) => {
@@ -24,7 +27,8 @@ const DetailEtudiant = () => {
                 setError("Failed to fetch student details");
                 setLoading(false);
             });
-    }, [id]);
+            console.log(student);
+    };
 
     const handleAddNote = () => {
         if (!matiere.trim() || !note.trim()) {
@@ -33,14 +37,19 @@ const DetailEtudiant = () => {
         }
 
         // Assume you have an API endpoint to add a note
-        axios
-            .post(`http://localhost:8080/api/etudiants/${id}/notes`, { matiere, note })
-            .then((response) => {
-                // Update the student data with the new note
-                setStudent((prevStudent) => ({
-                    ...prevStudent,
-                    notes: [...prevStudent.notes, { matiere, note }],
-                }));
+        axios.post(`http://localhost:8080/api/etudiants/${id}/notes`, { 
+            cours: matiere,  // Change matiere to cours
+            valeur: note     // Change note to valeur
+        })
+        .then((response) => {
+            // Directly update the notes array in the student state
+            setStudent((prevStudent) => ({
+                ...prevStudent,
+                notes: [
+                    ...prevStudent.notes, 
+                    { cours: matiere, valeur: note } // Add the new note to the list
+                ],
+            }));
                 message.success("Note added successfully!");
                 setIsModalVisible(false);
                 setMatiere(""); // Reset the matière input
@@ -94,32 +103,33 @@ const DetailEtudiant = () => {
                                 <tr
                                     key={index}
                                     style={{
-                                        backgroundColor:
-                                            student.moyenne > 10 ? "#d4edda" : "#f8d7da",
-                                        color: student.moyenne > 10 ? "#155724" : "#721c24",
+                                        backgroundColor: note.valeur > 10 ? "#d4edda" : "#f8d7da", 
+                                        color: "black"
                                     }}
                                 >
-                                    <td style={{ padding: "12px 15px", borderBottom: "1px solid #ddd" }}>
-                                        {note.matiere}
+                                    <td style={{ padding: "12px 15px", borderBottom: "1px solid #ddd"}}>
+                                        {note.cours}
                                     </td>
                                     <td style={{ padding: "12px 15px", borderBottom: "1px solid #ddd" }}>
-                                        {note.note}
+                                        {note.valeur}
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="2" style={{ textAlign: "center", padding: "12px 15px" }}>
-                                    No notes available
+                                <td colSpan="2" style={{ textAlign: "center", padding: "12px 15px" ,backgroundColor:"#f8d7da"}}>
+                                    Pas de notes disponibles
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </table>
 
-                <button className="addNote" onClick={() => setIsModalVisible(true)}>
-                    Add Note
-                </button>
+                <div className="table-footer">
+                    <button className="addNote" onClick={() => setIsModalVisible(true)}>
+                        Add Note
+                    </button>
+                </div>
             </div>
 
             <Modal
