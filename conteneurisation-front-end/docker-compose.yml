@@ -1,0 +1,53 @@
+version: '3.8'
+networks:
+  projet-baknine-network:
+    driver: bridge
+services:
+  frontend:
+    build:
+      context: "D:/Conteneurisation-front-end/conteneurisation-front-end"  
+      dockerfile: Dockerfile
+    container_name: frontend-container
+    ports:
+      - "3000:80"  
+    depends_on:
+      - backend
+    networks:
+      - projet-baknine-network
+  backend:
+    build:
+      context: "D:/Conteneurisation-back-end/conteneurisation"  
+      dockerfile: Dockerfile
+    container_name: backend-container
+    ports:
+      - "8080:8080"  
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/projet
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=nouhaila
+    depends_on:
+      database :
+         condition: service_healthy
+    networks:
+      - projet-baknine-network
+  database:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"  
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: nouhaila
+      POSTGRES_DB: projet
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d projet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - projet-baknine-network
+volumes:
+  postgres-data:
