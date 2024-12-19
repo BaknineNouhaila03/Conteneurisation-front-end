@@ -33,7 +33,7 @@ const Home = () => {
 
     const fetchStudents = () => {
         axios
-            .get("http://localhost:8080/api/etudiants")
+            .get("http://baknine.backend.com/api/etudiants")
             .then((response) => {
                 setEtudiants(response.data);
             })
@@ -68,7 +68,7 @@ const Home = () => {
         }
 
         axios
-            .post("http://localhost:8080/api/etudiants", { nom: newStudentName })
+            .post("http://baknine.backend.com/api/etudiants", { nom: newStudentName })
             .then((response) => {
                 setEtudiants([...etudiants, response.data]);
                 notification.success({
@@ -102,7 +102,7 @@ const Home = () => {
         }
 
         axios
-            .patch(`http://localhost:8080/api/etudiants/${editingStudent.id}`, {
+            .patch(`http://baknine.backend.com/api/etudiants/${editingStudent.id}`, {
                 nom: editingStudent.nom,
             })
             .then(() => {
@@ -129,7 +129,7 @@ const Home = () => {
             content: `Are you sure you want to delete ${etudiant.nom}?`,
             onOk: () => {
                 axios
-                    .delete(`http://localhost:8080/api/etudiants/${etudiant.id}`)
+                    .delete(`http://baknine.backend.com/api/etudiants/${etudiant.id}`)
                     .then(() => {
                         setEtudiants(etudiants.filter((e) => e.id !== etudiant.id));
                         notification.success({

@@ -18,7 +18,7 @@ const DetailEtudiant = () => {
 
     const fetchNotes =()=> {
         axios
-            .get(`http://localhost:8080/api/etudiants/${id}`)
+            .get(`http://baknine.backend.com/api/etudiants/${id}`)
             .then((response) => {
                 setStudent(response.data); 
                 setLoading(false);
